@@ -1,3 +1,8 @@
+wxtwilio.sh
+.DS_Store
+*.sqlite
+archive/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+printf "\n--- Updating Web ---\n"
+rsync -avz *.py *.sh cantoni.org:public_html/cgi-bin/wxtext/
+
+printf "\nDone\n\n"
