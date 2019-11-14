@@ -39,9 +39,10 @@ def weather(lat, lon, verbose=False):
     if verbose:
         print("WEATHER: {}".format(req.content))
     dat = json.loads(req.content)
-    txt = "{}: {}F, humidity {}%, wind {}mph from {}".format(
+    txt = "{}: {}F, {}, humidity {}%, wind {}mph from {}".format(
         dat['name'],
         int(round(dat['main']['temp'])),
+        dat['weather'][0]['description'],
         int(round(dat['main']['humidity'])),
         int(round(dat['wind']['speed'])),
         compass.degrees_direction(dat['wind']['deg'])
