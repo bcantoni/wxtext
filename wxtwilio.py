@@ -3,7 +3,6 @@
  Wrapper to receive the Twilio webhook and call wxtext.py to generate the response
 """
 import cgi
-import cgitb
 import wxtext
 
 
@@ -12,7 +11,6 @@ def logmsg(_msg):
         logfile.write("{}\n".format(_msg))
 
 
-cgitb.enable(display=0, logdir="logs/")
 logmsg("---start---")
 
 form = cgi.FieldStorage()
