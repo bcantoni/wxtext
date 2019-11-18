@@ -25,6 +25,7 @@ wx = wxtext.wxtext(location)
 logmsg("reply: {}".format(wx))
 
 templ = """Content-Type: text/xml;charset=utf-8
+Cache-Control: max-age=300, public
 
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
