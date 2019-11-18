@@ -20,9 +20,10 @@ for key in form.keys():
     logmsg("%s: %s" % (variable, value))
 
 location = form.getvalue("Body")
-wx = wxtext.wxtext(location)
-
-logmsg("reply: {}".format(wx))
+if location.upper() == 'HELP':
+    msg = "Welcome to Scooterlabs Weather by Text - to receive the current weather, reply with your city, state or zip/postal code. Powered by DarkSky https://darksky.net/poweredby/"
+else:
+    msg = wxtext.wxtext(location)
 
 templ = """Content-Type: text/xml;charset=utf-8
 Cache-Control: max-age=300, public
@@ -32,7 +33,7 @@ Cache-Control: max-age=300, public
 <Message>{}</Message>
 </Response>
 """
-resp = templ.format(wx)
+resp = templ.format(msg)
 logmsg(resp)
 logmsg("---end---\n")
 
