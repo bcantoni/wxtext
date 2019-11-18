@@ -12,11 +12,11 @@ Image credit: [Flickr](https://flickr.com/photos/18378305@N00/48068931826/)
 
 The code currently runs on Python 2.7. I'm running on a shared web host where I don't have sudo, so I'm not using any libraries beyond what's normally present in a 2.7 system.
 
-You'll need to sign for free developer accounts on Here.com and OpenWeather, then set up these environment variables:
+You'll need to sign for free developer accounts on Here.com and DarkSky, then set up these environment variables:
 
 * HERE_APP_ID
 * HERE_APP_CODE
-* OPENWEATHER_APP_ID
+* DARKSKY_SECRET
 
 On your webhost:
 
@@ -35,3 +35,5 @@ Finally, in Twilio buy a number (or use one you already have) and configure it t
 * Improve error handling everywhere, especially if location is not found (make sure always respond to a request from user)
 * Look at hosting on AWS Lambda w/API Gateway rather than requiring a separate web host
 * Better handling for cases where >1 location may be found, give user a choice
+* Settle on best weather forecast API to use (currently set to DarkSky)
+* Future support for forecast in addition to current conditions

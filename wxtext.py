@@ -89,14 +89,46 @@ def weather(lat, lon, verbose=False):
     return txt
 
 
+def weather_darksky(lat, lon, verbose=False):
+    """From lat/lon coordinates, find current weather report"""
+    url = "https://api.darksky.net/forecast/{}/{},{}?exclude=minutely,daily,alerts,hourly".format(
+        os.environ['DARKSKY_SECRET'],
+        lat,
+        lon
+    )
+    req = requests.get(url)
+    if verbose:
+        print("WEATHER: {}".format(req.content))
+    dat = json.loads(req.content)
+
+    summary = dat['currently']['summary']
+    temp = int(round(dat['currently']['temperature']))
+    humidity = dat['currently']['humidity'] * 100
+    wind = int(round(dat['currently']['windSpeed']))
+    direction = compass.degrees_direction(dat['currently']['windBearing'])
+
+    txt = "{}F, {}, humidity {}%, wind {}mph from {}".format(
+        temp,
+        summary,
+        humidity,
+        wind,
+        direction
+    )
+
+    return txt
+
+
 def wxtext(location, verbose=False):
     """From text location description, find and summarize current weather report"""
     (addr, lat, lon, postalcode) = geocode(location, verbose)
+    '''
     if postalcode:
         wx = weather_by_zipcode(postalcode, verbose)
     else:
         wx = weather(lat, lon, verbose)
-    return wx
+    '''
+    wx = weather_darksky(lat, lon, verbose)
+    return "{}: {}".format(addr, wx)
 
 
 if __name__ == '__main__':
