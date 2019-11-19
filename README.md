@@ -17,6 +17,9 @@ You'll need to sign for free developer accounts on Here.com and DarkSky, then se
 * HERE_APP_ID
 * HERE_APP_CODE
 * DARKSKY_SECRET
+* SLACK_WEBHOOK (optional)
+
+(If you're using Slack, the webhook can be used to drop a simple message each time someone makes a request.)
 
 On your webhost:
 

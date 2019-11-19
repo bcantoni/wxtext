@@ -3,6 +3,8 @@
  Wrapper to receive the Twilio webhook and call wxtext.py to generate the response
 """
 import cgi
+import os
+import requests
 import wxtext
 
 
@@ -11,13 +13,23 @@ def logmsg(_msg):
         logfile.write("{}\n".format(_msg))
 
 
+def send_slack_messages(slack_webhook_url, messages):
+    for m in messages:
+        req = requests.post(slack_webhook_url, json={'text': m})
+        logmsg("Response from Slack webhook: {} {}".format(req.status_code, req.content))
+    return
+
+
 logmsg("---start---")
 
 form = cgi.FieldStorage()
+reqkeys = []
 for key in form.keys():
     variable = str(key)
     value = str(form.getvalue(variable))
-    logmsg("%s: %s" % (variable, value))
+    msg = "{}: {}".format(variable, value)
+    logmsg(msg)
+    reqkeys.append(msg)
 
 location = form.getvalue("Body")
 if location.upper() == 'HELP':
@@ -38,3 +50,8 @@ logmsg(resp)
 logmsg("---end---\n")
 
 print(resp)
+
+send_slack_messages(
+    os.environ['SLACK_WEBHOOK'],
+    ["\n".join(reqkeys), msg]
+)
