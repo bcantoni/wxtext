@@ -3,8 +3,8 @@
 This is the code which powers my [Weather by Text](http://scooterlabs.com/wx/) service. The backend code is written in Python and uses the following services:
 
 * **Twilio** for text/SMS messaging (requests and responses)
-* **Here.com** for geocoding (converting from place names into lat/long coordinates)
-* **OpenWeather** for providing weather forecast data from lat/long coordinates
+* **HERE** for geocoding (converting from place names into lat/long coordinates)
+* **DarkSky** for providing weather forecast data from lat/long coordinates
 
 Image credit: [Flickr](https://flickr.com/photos/18378305@N00/48068931826/)
 
@@ -12,7 +12,7 @@ Image credit: [Flickr](https://flickr.com/photos/18378305@N00/48068931826/)
 
 The code currently runs on Python 2.7. I'm running on a shared web host where I don't have sudo, so I'm not using any libraries beyond what's normally present in a 2.7 system.
 
-You'll need to sign for free developer accounts on Here.com and DarkSky, then set up these environment variables:
+You'll need to sign for free developer accounts on HERE and DarkSky, then set up these environment variables:
 
 * HERE_APP_ID
 * HERE_APP_CODE
