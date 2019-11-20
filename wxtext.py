@@ -8,6 +8,12 @@ import urllib
 import compass
 
 
+def strip_non_ascii(string):
+    ''' Returns the string without non ASCII characters'''
+    stripped = (c for c in string if 0 < ord(c) < 127)
+    return ''.join(stripped)
+
+
 def geocode(location, verbose=False):
     """From text location description, find lat/lon coordinates"""
     url = "https://geocoder.api.here.com/6.2/geocode.json?app_id={}&app_code={}&searchtext={}&countryfocus={}".format(
@@ -20,24 +26,18 @@ def geocode(location, verbose=False):
     req = requests.get(url)
     if verbose:
         print("GEOCODE: {}".format(req.content))
-    dat = json.loads(req.content)
+    dat = json.loads(strip_non_ascii(req.content))
     view = dat['Response']['View'][0]
 
-    if view['Result'][0]['Location']['Address'] == 'USA':
-        postalcode = view['Result'][0]['Location']['Address']['PostalCode']
-    else:
-        postalcode = False
-
     if verbose:
-        print("Full found geolocation: {}\nPostal code: {}".format(
-            view['Result'][0]['Location']['Address']['Label'],
-            postalcode
+        print("Full found geolocation: {}".format(
+            view['Result'][0]['Location']['Address']['Label']
         ))
 
     return (view['Result'][0]['Location']['Address']['Label'],
             view['Result'][0]['Location']['DisplayPosition']['Latitude'],
-            view['Result'][0]['Location']['DisplayPosition']['Longitude'],
-            postalcode)
+            view['Result'][0]['Location']['DisplayPosition']['Longitude']
+    )
 
 
 def weather_darksky(lat, lon, verbose=False):
@@ -71,7 +71,7 @@ def weather_darksky(lat, lon, verbose=False):
 
 def wxtext(location, verbose=False):
     """From text location description, find and summarize current weather report"""
-    (addr, lat, lon, postalcode) = geocode(location, verbose)
+    (addr, lat, lon) = geocode(location, verbose)
     wx = weather_darksky(lat, lon, verbose)
     return "{}: {}".format(addr, wx)
 
@@ -83,7 +83,7 @@ if __name__ == '__main__':
 
     tests = [
         'Soda Springs, CA',
-        '95129',
+        '94050',
         '95014',
         'Joshua Tree',
         'Dublin Ireland'
