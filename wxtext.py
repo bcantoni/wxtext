@@ -40,55 +40,6 @@ def geocode(location, verbose=False):
             postalcode)
 
 
-def weather_by_zipcode(zipcode, verbose=False):
-    """From zipcode, find current weather report"""
-    url = "https://api.openweathermap.org/data/2.5/weather?APPID={}&zip={}&units=imperial".format(
-        os.environ['OPENWEATHER_APP_ID'],
-        zipcode
-    )
-    req = requests.get(url)
-    if verbose:
-        print("WEATHER: {}".format(req.content))
-    dat = json.loads(req.content)
-    txt = "{}: {}F, {}, humidity {}%, wind {}mph from {}".format(
-        dat['name'],
-        int(round(dat['main']['temp'])),
-        dat['weather'][0]['description'],
-        int(round(dat['main']['humidity'])),
-        int(round(dat['wind']['speed'])),
-        compass.degrees_direction(dat['wind']['deg'])
-    )
-
-    return txt
-
-
-def weather(lat, lon, verbose=False):
-    """From lat/lon coordinates, find current weather report"""
-    url = "https://api.openweathermap.org/data/2.5/weather?APPID={}&lat={}&lon={}&units=imperial".format(
-        os.environ['OPENWEATHER_APP_ID'],
-        lat,
-        lon
-    )
-    req = requests.get(url)
-    if verbose:
-        print("WEATHER: {}".format(req.content))
-    dat = json.loads(req.content)
-    if 'deg' in dat['wind']:
-        degrees = compass.degrees_direction(dat['wind']['deg'])
-    else:
-        degrees = 0
-    txt = "{}: {}F, {}, humidity {}%, wind {}mph from {}".format(
-        dat['name'],
-        int(round(dat['main']['temp'])),
-        dat['weather'][0]['description'],
-        int(round(dat['main']['humidity'])),
-        int(round(dat['wind']['speed'])),
-        degrees
-    )
-
-    return txt
-
-
 def weather_darksky(lat, lon, verbose=False):
     """From lat/lon coordinates, find current weather report"""
     url = "https://api.darksky.net/forecast/{}/{},{}?exclude=minutely,daily,alerts,hourly".format(
@@ -121,12 +72,6 @@ def weather_darksky(lat, lon, verbose=False):
 def wxtext(location, verbose=False):
     """From text location description, find and summarize current weather report"""
     (addr, lat, lon, postalcode) = geocode(location, verbose)
-    '''
-    if postalcode:
-        wx = weather_by_zipcode(postalcode, verbose)
-    else:
-        wx = weather(lat, lon, verbose)
-    '''
     wx = weather_darksky(lat, lon, verbose)
     return "{}: {}".format(addr, wx)
 
