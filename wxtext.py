@@ -4,7 +4,7 @@ import argparse
 import json
 import os
 import requests
-import urllib
+import urllib.parse
 import compass
 
 
@@ -19,7 +19,7 @@ def geocode(location, verbose=False):
     url = "https://geocoder.api.here.com/6.2/geocode.json?app_id={}&app_code={}&searchtext={}&countryfocus={}".format(
         os.environ['HERE_APP_ID'],
         os.environ['HERE_APP_CODE'],
-        urllib.quote(location),
+        urllib.parse.quote(location),
         'USA'
     )
 
@@ -37,7 +37,7 @@ def geocode(location, verbose=False):
     return (view['Result'][0]['Location']['Address']['Label'],
             view['Result'][0]['Location']['DisplayPosition']['Latitude'],
             view['Result'][0]['Location']['DisplayPosition']['Longitude']
-    )
+            )
 
 
 def weather_darksky(lat, lon, verbose=False):
