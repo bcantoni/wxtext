@@ -8,12 +8,6 @@ import urllib.parse
 import compass
 
 
-def strip_non_ascii(string):
-    ''' Returns the string without non ASCII characters'''
-    stripped = (c for c in string if 0 < ord(c) < 127)
-    return ''.join(stripped)
-
-
 def geocode(location, verbose=False):
     """From text location description, find lat/lon coordinates"""
     url = "https://geocoder.ls.hereapi.com/6.2/geocode.json?apiKey={}&searchtext={}&countryfocus={}".format(
@@ -25,7 +19,7 @@ def geocode(location, verbose=False):
     req = requests.get(url)
     if verbose:
         print("GEOCODE: {}".format(req.content))
-    dat = json.loads(strip_non_ascii(req.content))
+    dat = json.loads(req.content)
     view = dat['Response']['View'][0]
 
     if verbose:
