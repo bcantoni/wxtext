@@ -16,8 +16,7 @@ def strip_non_ascii(string):
 
 def geocode(location, verbose=False):
     """From text location description, find lat/lon coordinates"""
-    url = "https://geocoder.api.here.com/6.2/geocode.json?app_id={}&app_code={}&searchtext={}&countryfocus={}".format(
-        os.environ['HERE_APP_ID'],
+    url = "https://geocoder.ls.hereapi.com/6.2/geocode.json?apiKey={}&searchtext={}&countryfocus={}".format(
         os.environ['HERE_APP_CODE'],
         urllib.parse.quote(location),
         'USA'
