@@ -20,7 +20,10 @@ def geocode(location, verbose=False):
     if verbose:
         print("GEOCODE: {}".format(req.content))
     dat = json.loads(req.content)
-    view = dat['Response']['View'][0]
+    if len(dat['Response']['View']) > 0:
+        view = dat['Response']['View'][0]
+    else:
+        return(None, None, None)
 
     if verbose:
         print("Full found geolocation: {}".format(
@@ -65,6 +68,8 @@ def weather_darksky(lat, lon, verbose=False):
 def wxtext(location, verbose=False):
     """From text location description, find and summarize current weather report"""
     (addr, lat, lon) = geocode(location, verbose)
+    if addr is None:
+        return "Location not found"
     wx = weather_darksky(lat, lon, verbose)
     return "{}: {}".format(addr, wx)
 
@@ -75,6 +80,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     tests = [
+        'where is it coldest right now',
         'Soda Springs, CA',
         '94050',
         '95014',
