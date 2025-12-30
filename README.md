@@ -8,6 +8,10 @@ This is the code which powers my [Weather by Text](http://scooterlabs.com/wx/) s
 
 Image credit: [Flickr](https://flickr.com/photos/18378305@N00/48068931826/)
 
+Blog post: <https://www.cantoni.org/2019/11/19/weather-by-text-twilio-darksky/>
+
+Retirement blog post: <https://www.cantoni.org/2020/11/19/retire-weather-by-text/>
+
 ## Setup
 
 The code has been updated to run on Python 3.7.5. I'm running on a shared web host where I don't have sudo, so I'm not using any libraries beyond what's normally present in a 3.7 system.
